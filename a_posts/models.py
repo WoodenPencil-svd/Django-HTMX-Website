@@ -10,3 +10,5 @@ class Post(models.Model):
     
     def __str__(self):
         return str(self.title)
+    class Meta:
+        ordering =['-created']  # Make the new post go up
