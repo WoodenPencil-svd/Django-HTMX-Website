@@ -11,9 +11,9 @@
 
     <form method='POST'>
        {% csrf_token %} 
-       {{ form.as_p }}
+       {{ form.as_p }}  
         <button type="submit" class="mt-1">Submit Post</button>
-        <a class="button secondaryAction ml-1" href="{{ request.META.HTTP_REFERER }}">Cancel</a> #Cancel button
+        <a class="button secondaryAction ml-1" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
     </form>
 </div>
  {% endblock %}
