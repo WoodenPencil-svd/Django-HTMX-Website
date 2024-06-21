@@ -4,6 +4,7 @@ from django.forms import ModelForm
 from django import forms
 from bs4 import BeautifulSoup
 import requests
+from django.contrib import messages
 
 # View to display all posts
 def home_view(request):
@@ -59,3 +60,17 @@ def post_create_view(request):
             return redirect('home')
 
     return render(request, 'a_posts/post_create.html', {'form': form})
+
+def post_delete_view(request,pk):
+    post = Post.objects.get(id = pk)
+    
+    if request.method == 'POST':
+        post.delete()
+        messages.success(request,'Post deleted')
+        return redirect('home')
+    return render(request,'a_posts/post_delete.html',{'post': post })
+
+def post_edit_view(request,pk):
+    post = Post.objects.get(id=pk)
+    return render(request,'a_posts/post_edit.html',{'post': post})
+
