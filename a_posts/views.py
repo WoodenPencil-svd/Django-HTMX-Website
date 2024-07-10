@@ -1,13 +1,26 @@
 from django.shortcuts import render, redirect,get_object_or_404
-from .models import Post
+from .models import *
 from bs4 import BeautifulSoup
 import requests
 from django.contrib import messages
 from .forms import *
 # View to display all posts
-def home_view(request):
-    posts = Post.objects.all()
-    return render(request, 'a_posts/home.html', {'posts': posts})
+def home_view(request, tag = None):
+    if tag:
+     posts = Post.objects.filter(tags__slug=tag)
+     tag = get_object_or_404(Tag,slug =tag)
+    else:
+     posts = Post.objects.all()
+     
+    categories = Tag.objects.all()
+    
+    context = {
+        'posts': posts,
+        'categories': categories,
+        'tag' : tag,
+    }
+    
+    return render(request, 'a_posts/home.html', context)
 
 
 
@@ -36,6 +49,7 @@ def post_create_view(request):
             post.artist = artist
 
             post.save()
+            form.save_m2m()
             messages.success(request,'Post created')
             return redirect('home')
 
