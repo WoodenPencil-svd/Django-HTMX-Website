@@ -4,7 +4,7 @@
         <logo>
             <a class="flex items-center gap-1" href="/">
                 <img class="w-6 mr-1 -mt-1" src="{%  static 'images/fireheart_white.svg' %}"/>
-                <span class="text-lg font-bold">Thành Nhân</span>
+                <span class="text-lg font-bold">Home</span>
             </a>
         </logo>
         <mobileicon class="md:hidden">
@@ -34,7 +34,7 @@
                 x-transition:enter-start="opacity-0 -translate-y-5 scale-90"
                 x-transition:enter-end="opacity-100 translate-y-0 scale-100">
                     <ul class="hoverlist [&>li>a]:justify-end">
-                        <li><a href="">My Profile</a></li>
+                        <li><a href="{% url 'profile' %}">My Profile</a></li>
                         <li><a href="">Edit Profile</a></li>
                         <li><a href="{% url 'account_logout' %} ">Log Out</a></li>
                     </ul>
