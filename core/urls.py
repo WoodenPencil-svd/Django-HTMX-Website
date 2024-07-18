@@ -20,6 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from a_users.views import *
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view, name = 'home'),
@@ -29,7 +30,7 @@ urlpatterns = [
     path('post/edit/<pk>/', post_edit_view,name='post-edit'),
     path('post/<pk>/', post_page_view,name='post-view'),
     path('category/<tag>',home_view, name= 'category'),
-    path('profile/', profile_view, name='profile')
-]
+    path('profile/', profile_view, name='profile'),
+    path('profile/edit/', profile_edit_view, name ='profile-edit'),
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
