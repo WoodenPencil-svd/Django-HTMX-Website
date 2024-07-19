@@ -43,6 +43,8 @@ def post_create_view(request):
             find_title = sourcecode.select(' h1.meta-field.photo-title')
             title = find_title[0].text.strip()
             post.title = title
+            
+          
 
             find_artist = sourcecode.select('a.owner-name.truncate')
             artist = find_artist[0].text.strip()

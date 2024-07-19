@@ -32,5 +32,8 @@ urlpatterns = [
     path('category/<tag>',home_view, name= 'category'),
     path('profile/', profile_view, name='profile'),
     path('profile/edit/', profile_edit_view, name ='profile-edit'),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+urlpatterns += static(settings.MEDIA_URL,document_root =settings.MEDIA_ROOT)
+
 
