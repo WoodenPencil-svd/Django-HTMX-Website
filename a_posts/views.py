@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import requests
 from django.contrib import messages
 from .forms import *
+from django.contrib.auth.decorators import login_required
 # View to display all posts
 def home_view(request, tag = None):
     if tag:
@@ -23,8 +24,7 @@ def home_view(request, tag = None):
     return render(request, 'a_posts/home.html', context)
 
 
-
-# View to create a new post
+@login_required
 def post_create_view(request):
     form = PostCreateForm()
 
@@ -44,7 +44,7 @@ def post_create_view(request):
             title = find_title[0].text.strip()
             post.title = title
             
-          
+            post.author = request.user
 
             find_artist = sourcecode.select('a.owner-name.truncate')
             artist = find_artist[0].text.strip()
@@ -58,10 +58,10 @@ def post_create_view(request):
     return render(request, 'a_posts/post_create.html', {'form': form})
 
 
-
+@login_required
 def post_delete_view(request,pk):
     #post = Post.objects.get(id = pk)
-    post = get_object_or_404(Post,id=pk)
+    post = get_object_or_404(Post,id=pk,author= request.user)
     if request.method == 'POST':
         post.delete()
         messages.success(request,'Post deleted')
@@ -69,10 +69,10 @@ def post_delete_view(request,pk):
     return render(request,'a_posts/post_delete.html',{'post': post })
 
 
-
+@login_required
 def post_edit_view(request,pk):
     #post = Post.objects.get(id=pk)
-    post = get_object_or_404(Post,id=pk)
+    post = get_object_or_404(Post,id=pk,author= request.user)
     form = PostEditForm(instance = post) #instace có nghĩa là nội dung của form hiện tại của post đã chọn.
     if request.method == 'POST':
         form = PostEditForm(request.POST,instance = post)
@@ -81,12 +81,13 @@ def post_edit_view(request,pk):
             messages.success(request,'Post updated')
             return redirect('home')
     context = {
-        'post': post,
+        'post': post, 
         'form' : form
         
     }
     return render(request,'a_posts/post_edit.html',context)
 
+ 
 def post_page_view(request,pk):
     # post = Post.objects.get(id = pk )
     post = get_object_or_404(Post,id=pk)
