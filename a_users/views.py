@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.http import Http404
 from django.shortcuts import render,redirect, get_object_or_404
+from django.urls import reverse
 from .forms import *
 from django.contrib.auth.models import User
 from django.contrib.auth import logout
@@ -23,6 +24,7 @@ def profile_edit_view(request):
         if form.is_valid():
             form.save()
             return redirect('profile')
+    
      
     return render(request,'a_users/profile_edit.html',{'form':form})
 
